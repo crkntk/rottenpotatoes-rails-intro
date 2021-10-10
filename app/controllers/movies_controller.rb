@@ -1,18 +1,28 @@
 class MoviesController < ApplicationController
-@all_rating = Movie.all_ratings
-	@ratings_to_show = []
+	before_filter :set_ratings, :ratings_to_show
   def show
     id = params[:id] # retrieve movie ID from URI route
     @movie = Movie.find(id) # look up movie by unique ID
     # will render app/views/movies/show.<extension> by default
   end
-	
+	def set_ratings
+		if(@all_ratings == nil)
+			@all_ratings = Movie.all_ratings
+		else
+			return
+		end
+			
+		end
   def index
     @movies = Movie.with_ratings(ratings_to_show)
   end
 	
 def ratings_to_show
+	if (params[:ratings] == nil)
+		@ratings_to_show = []
+	else
 	@ratings_to_show = params[:ratings].keys
+	end
 end
   def new
     # default: render 'new' template
