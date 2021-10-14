@@ -13,23 +13,30 @@ class MoviesController < ApplicationController
 			return
 		end
 		end
+	
   def index
+		#session[:ratings] = []
 		@clicked = ""
-		if(params[:clicked] == "Title")
-			@clicked = "Title"
+		if(params[:clicked]== nil && params[:ratings] == nil)
+			session[:ratings] = []
+			@ratings_to_show = []
+			@movies = Movie.all
+		else
+    @movies = Movie.with_ratings(session[:ratings],params[:clicked])
 		end
-		if (params[:clicked] == "Release_Date")
-			@clicked = "Release_Date"
-		end
-    @movies = Movie.with_ratings(ratings_to_show,@clicked)
 	end
 	
 def ratings_to_show
-	if (params[:ratings] == nil)
+	if(params[:ratings] == nil && session[:ratings] == nil)
+		session[:ratings] = []
 		@ratings_to_show = []
-	else
-	@ratings_to_show = params[:ratings].keys
+	elsif(session[:ratings] && params[:ratings] != nil|| (session[:ratings] == nil && params[:ratings] != nil)  )
+		session[:ratings] = params[:ratings].keys
+		@ratings_to_show = params[:ratings].keys
+	elsif(session[:ratings])
+		@ratings_to_show = session[:ratings]
 	end
+		
 end
 	
 	

@@ -16,24 +16,22 @@ class Movie < ActiveRecord::Base
 	end
 	
 	def self.with_ratings(ratings,order)
-		if(ratings.length !=0 && order!= nil)
-		Movie.where(rating: ratings)
-		elsif (ratings.length != 0 && order == "Title")
-			Movie.where(rating: ratings).order("title ASC")
+		if (ratings.length != 0 && order == "Title")
+			return Movie.where(rating: ratings).order("title ASC")
 			
-		elsif(ratings.length !=0 && order!= "Release_Date")
-			Movie.where(rating: ratings).order("release_date ASC")
+		elsif(ratings.length !=0 && order== "Release_Date")
+			return Movie.where(rating: ratings).order("release_date ASC")
 			
 		elsif (ratings.length == 0 && order == "Title")
-			Movie.order("title ASC")
+			return Movie.order("title ASC")
 			
 		elsif (ratings.length == 0 && order == "Release_Date")
-			Movie.order("release_date ASC")
-			
+			return Movie.order("release_date ASC")
+		elsif(ratings.length != 0 && order == nil)
+			return Movie.where(rating: ratings)
 		else
 			Movie.all
 		end
-		
 	end
 end
 
