@@ -17,6 +17,12 @@ class MoviesController < ApplicationController
   def index
 		#session[:ratings] = []
 		@clicked = ""
+		if(params[:clicked]== "Title")
+			@title_class = "p-3 mb-2 bg-warning text-dark"
+		end
+		if(params[:clicked]== "Release_Date")
+			@release_class = "p-3 mb-2 bg-warning text-dark"
+		end
 		if(params[:clicked]== nil && params[:ratings] == nil)
 			session[:ratings] = []
 			@ratings_to_show = []
