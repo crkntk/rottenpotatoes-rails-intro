@@ -15,7 +15,7 @@ class MoviesController < ApplicationController
 		end
 	
   def index
-		#session[:ratings] = []
+		#session[:ratings] = nil
 		@clicked = ""
 		if(params[:clicked]== "Title")
 			@title_class = "p-3 mb-2 bg-warning text-dark"
@@ -24,7 +24,13 @@ class MoviesController < ApplicationController
 			@release_class = "p-3 mb-2 bg-warning text-dark"
 		end
 		if(params[:clicked]== nil && params[:ratings] == nil)
-			session[:ratings] = []
+			if (session[:ratings] != nil && params[:redirect] == nil)
+				params[:ratings] = session[:ratings]
+				params[:redirect] = true
+				redirect_to movies_path
+				return
+			end
+			session[:ratings] = nil
 			@ratings_to_show = []
 			@movies = Movie.all
 		else
