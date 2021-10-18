@@ -17,11 +17,11 @@ class MoviesController < ApplicationController
   def index
 		@clicked = ""
 		if(params[:clicked]== "Title")
-			@title_class = "p-3 mb-2 bg-warning text-dark"
+			@title_class = "hilite p-3 mb-2 bg-warning text-dark"
 			session[:clicked] = params[:clicked]
 		end
 		if(params[:clicked]== "Release_Date")
-			@release_class = "p-3 mb-2 bg-warning text-dark"
+			@release_class = "hilite p-3 mb-2 bg-warning text-dark"
 			session[:clicked] = params[:clicked]
 		end
 		if(params[:clicked]== nil && params[:home] != nil)
